@@ -27,7 +27,7 @@ const isValidatedChangeRequest = (req: Request, res: Response, next: NextFunctio
  */
 const isValidClassificationOption = async (req: Request, res: Response, next: NextFunction) => {
 	const value = req.body.value as AccountClassificationTypes;
-	if (!value || value !== "NONE") {
+	if (!value.length) {
 		res.status(400).json({
 			error: "Bad value in request",
 		});

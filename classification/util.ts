@@ -24,9 +24,16 @@ const formatDate = (date: Date): string => moment(date).format("MMMM Do YYYY, h:
  * @param {HydratedDocument<Timeline>} timeline - A timeline
  * @returns {AccountClassificationResponse} - The event object formatted for the frontend
  */
-const constructClassificationResponse = async (
-	classification: HydratedDocument<AccountClassification>
-): Promise<AccountClassificationResponse> => {
+const constructClassificationResponse = (
+	classification: HydratedDocument<AccountClassification> | null
+): AccountClassificationResponse => {
+	if (classification === null) {
+		return {
+			_id: "",
+			type: "NONE",
+			dateModified: "",
+		};
+	}
 	const classificaitonCopy: AccountClassification = {
 		...classification.toObject({
 			versionKey: false, // Cosmetics; prevents returning of __v property

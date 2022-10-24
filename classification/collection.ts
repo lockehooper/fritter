@@ -53,7 +53,7 @@ class AccountClassificationCollection {
 		classification.type = type;
 		classification.dateModified = new Date();
 		await classification.save();
-		return classification.populate("authorId");
+		return classification.populate("userId");
 	}
 
 	/**

@@ -88,7 +88,6 @@ router.put(
 	[
 		userValidator.isUserLoggedIn,
 		accountClassificationValidator.isValidatedChangeRequest,
-		accountClassificationValidator.isExisitngClassification,
 		accountClassificationValidator.isValidClassificationOption,
 	],
 	async (req: Request, res: Response) => {
