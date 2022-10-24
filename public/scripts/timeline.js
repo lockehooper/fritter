@@ -6,5 +6,11 @@
  */
 
 function viewTimeline(fields) {
-	fetch(`/api/timeline?type=${fields.type}`).then(showResponse).catch(showResponse);
+	fetch(`/api/timeline`, {
+		method: "GET",
+		body: JSON.stringify(fields),
+		headers: { "Content-Type": "application/json" },
+	})
+		.then(showResponse)
+		.catch(showResponse);
 }
