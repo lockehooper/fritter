@@ -11,7 +11,7 @@ import { AccountClassificationTypes } from "./model";
  */
 const isValidatedChangeRequest = (req: Request, res: Response, next: NextFunction) => {
 	const { validation } = req.body as { validation: string };
-	const isValid = validation == "SOME_CAPTCHA_PASS";
+	const isValid = validation == "SOME_CAPTCHA";
 	if (!isValid) {
 		res.status(403).json({
 			error: "Bad validation",
