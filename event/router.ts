@@ -51,7 +51,12 @@ router.get(
  *
  * @name POST /api/events
  *
- * @param {string} content - The content of the event
+ * @param {string} name - The name of the event
+ * @param {string} description - The description of the event
+ * @param {string} start - The start timestamp of the event
+ * @param {string} end - The end timestamp of the event
+ * @param {string} freeters - The userIds whose freets should be in the event
+ *
  * @return {EventResponse} - The created event
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the event content does not have a name or description
@@ -96,7 +101,12 @@ router.delete(
  *
  * @name PUT /api/events/:id
  *
- * @param {string} content - the new content for the event
+ * @param {string} name - The name of the event
+ * @param {string} description - The description of the event
+ * @param {string} start - The start timestamp of the event
+ * @param {string} end - The end timestamp of the event
+ * @param {string} freeters - The userIds whose freets should be in the event
+ *
  * @return {EventResponse} - the updated event
  * @throws {403} - if the user is not logged in or not the author of
  *                 of the event

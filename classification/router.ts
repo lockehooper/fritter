@@ -19,8 +19,8 @@ const router = express.Router();
  */
 
 router.get("/", [userValidator.isUserLoggedIn], async (req: Request, res: Response, next: NextFunction) => {
-	const response = AccountClassificationCollection.findOne(req.session.userId);
-	res.status(200).json(response);
+	const response = await AccountClassificationCollection.findOne(req.session.userId);
+	res.status(200).json(util.constructClassificationResponse(response));
 });
 
 /**
@@ -49,7 +49,7 @@ router.post(
 		const value = (req.body.value as AccountClassificationTypes) || "NONE";
 		const classificaiton = await AccountClassificationCollection.addOne(userId, value);
 
-		res.status(201).json(classificaiton);
+		res.status(201).json(util.constructClassificationResponse(classificaiton));
 	}
 );
 
@@ -93,8 +93,8 @@ router.put(
 	],
 	async (req: Request, res: Response) => {
 		const classification = await AccountClassificationCollection.updateOne(req.session.userId, req.body.value);
-		res.status(200).json(classification);
+		res.status(200).json(util.constructClassificationResponse(classification));
 	}
 );
 
-export { router as freetRouter };
+export { router as classificationRouter };

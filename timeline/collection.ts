@@ -24,7 +24,7 @@ class TimelineCollection {
 			dateAccessed: date,
 		});
 		await timeline.save(); // Saves to MongoDB
-		return timeline.populate("userId");
+		return (await timeline.populate("userId")).populate("freets");
 	}
 
 	/**
@@ -63,7 +63,7 @@ class TimelineCollection {
 		userId: Types.ObjectId | string,
 		type: TimelineTypes
 	): Promise<HydratedDocument<Timeline>> {
-		const exisitingTimeline = this.findOne(userId, type);
+		const exisitingTimeline = await this.findOne(userId, type);
 		if (exisitingTimeline === null) {
 			return this.addOne(userId, type);
 		} else {

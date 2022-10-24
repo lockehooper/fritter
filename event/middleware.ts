@@ -1,4 +1,4 @@
-import AccountClassificationCollection from "classification/collection";
+import AccountClassificationCollection from "../classification/collection";
 import type { Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
 import EventCollection from "./collection";

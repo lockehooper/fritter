@@ -1,10 +1,7 @@
-import FreetCollection from "freet/collection";
-import { Freet } from "freet/model";
-import { constructFreetResponse, FreetResponse } from "freet/util";
+import FreetCollection from "../freet/collection";
+import { constructFreetResponse, FreetResponse } from "../freet/util";
 import moment from "moment";
 import { HydratedDocument, Types } from "mongoose";
-import { User } from "user/model";
-import { constructUserResponse, UserResponse } from "user/util";
 import { PopulatedEvent, Event } from "./model";
 
 // Update this if you add a property to the Freet type!
