@@ -395,7 +395,7 @@ This renders the `index.html` file that will be used to interact with the backen
 -   `description` _{string}_ - The description for the event
 -   `start` _{number}_ - Timestamp for the start of the event
 -   `end` _{number}_ - Timestamp for the end of the event
--   `authors` _{string[]}_ - A list of authorId whose posts to include
+-   `freeters` _{string[]}_ - A list of authorId whose posts to include
 
 **Returns**
 
@@ -416,7 +416,7 @@ This renders the `index.html` file that will be used to interact with the backen
 -   `description` _{string}_ - The description for the event
 -   `start` _{number}_ - Timestamp for the start of the event
 -   `end` _{number}_ - Timestamp for the end of the event
--   `authors` _{string[]}_ - A list of authorId whose posts to include
+-   `freeters` _{string[]}_ - A list of authorId whose posts to include
 
 **Returns**
 
@@ -429,7 +429,7 @@ This renders the `index.html` file that will be used to interact with the backen
 -   `404` if the eventId is not found
 -   `400` If any of the fields in the body are empty
 
-#### `GET /api/event/:eventId?` - Get an event
+#### `GET /api/events/:eventId?` - Get an event
 
 **Returns**
 
@@ -441,18 +441,18 @@ This renders the `index.html` file that will be used to interact with the backen
 -   `400` if the event has not started or ended
 -   `404` if the event is not found
 
-#### `GET /api/event/:eventId?/freets` - Get the freets for an event
+#### `GET /api/events?author=USERNAME` - Get freets by author
 
 **Returns**
 
--   An array of freets by the authors associated with an event
+-   An array of events created by user with username `author`
 
 **Throws**
 
--   `400` if the event has not started or ended
--   `404` if the event is not found
+-   `400` if `author` is not given
+-   `404` if `author` is not a recognized username of any user
 
-#### `DELETE /api/event/:eventId?` - Delete an existing event
+#### `DELETE /api/events/:eventId?` - Delete an existing event
 
 **Returns**
 
