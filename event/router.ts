@@ -35,13 +35,13 @@ router.get(
 		}
 
 		const allEvents = await EventCollection.findAll();
-		const response = allEvents.map(util.constructEventResponse);
+		const response = await Promise.all(allEvents.map(util.constructEventResponse));
 		res.status(200).json(response);
 	},
 	[userValidator.isAuthorExists],
 	async (req: Request, res: Response) => {
 		const authorEvents = await EventCollection.findAllByUsername(req.query.author as string);
-		const response = authorEvents.map(util.constructEventResponse);
+		const response = await Promise.all(authorEvents.map(util.constructEventResponse));
 		res.status(200).json(response);
 	}
 );
@@ -66,11 +66,18 @@ router.post(
 	[userValidator.isUserLoggedIn, eventValidator.isValidEventContent, eventValidator.isValidEventCreator],
 	async (req: Request, res: Response) => {
 		const userId = (req.session.userId as string) ?? ""; // Will not be an empty string since its validated in isUserLoggedIn
-		const event = await EventCollection.addOne(userId, req.body.content);
+		const params = {
+			name: req.body.name,
+			description: req.body.description,
+			start: parseInt(req.body.start),
+			end: parseInt(req.body.end),
+			freeters: req.body.freeters.split(","),
+		};
+		const event = await EventCollection.addOne(userId, params);
 
 		res.status(201).json({
 			message: "Your event was created successfully.",
-			event: util.constructEventResponse(event),
+			event: await util.constructEventResponse(event),
 		});
 	}
 );
@@ -121,10 +128,17 @@ router.put(
 		eventValidator.isValidEventContent,
 	],
 	async (req: Request, res: Response) => {
-		const event = await EventCollection.updateOne(req.params.eventId, req.body.content);
+		const params = {
+			name: req.body.name,
+			description: req.body.description,
+			start: parseInt(req.body.start),
+			end: parseInt(req.body.end),
+			freeters: req.body.freeters as string[],
+		};
+		const event = await EventCollection.updateOne(req.params.eventId, params);
 		res.status(200).json({
 			message: "Your event was updated successfully.",
-			event: util.constructEventResponse(event),
+			event: await util.constructEventResponse(event),
 		});
 	}
 );

@@ -41,12 +41,12 @@ const isValidEventContent = async (req: Request, res: Response, next: NextFuncti
 	const { start, end, name, description } = req.body;
 	const oldEvent = await EventCollection.findOne(req.params.freetId);
 
-	const startToCheck = start ? start : oldEvent.start;
-	const endToCheck = end ? end : oldEvent.end;
+	const startToCheck = start ? parseInt(start) : oldEvent.start;
+	const endToCheck = end ? parseInt(end) : oldEvent.end;
 
-	if (startToCheck <= endToCheck) {
+	if (startToCheck >= endToCheck) {
 		res.status(400).json({
-			error: "Events must start after they end",
+			error: "Events must end after they start",
 		});
 		return;
 	}

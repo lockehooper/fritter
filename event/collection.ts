@@ -29,7 +29,9 @@ class EventCollection {
 	 */
 	static async addOne(ownerId: Types.ObjectId | string, params: EventParams): Promise<HydratedDocument<Event>> {
 		const date = new Date();
-		const freeters = await Promise.all(params.freeters.map(async (u) => await UserCollection.findOneByUserId(u)));
+		const freeters = params.freeters.length
+			? await Promise.all(params.freeters.map(async (u) => await UserCollection.findOneByUserId(u)))
+			: [];
 		const event = new EventModel({
 			ownerId,
 			dateCreated: date,
@@ -41,7 +43,7 @@ class EventCollection {
 			dateModified: date,
 		});
 		await event.save(); // Saves event to MongoDB
-		return event.populate("ownerId");
+		return (await event.populate("ownerId")).populate("freeters");
 	}
 
 	/**
@@ -51,7 +53,7 @@ class EventCollection {
 	 * @return {Promise<HydratedDocument<Event>> | Promise<null> } - The event with the given eventId, if any
 	 */
 	static async findOne(eventId: Types.ObjectId | string): Promise<HydratedDocument<Event>> {
-		return (await EventModel.findOne({ _id: eventId }).populate("ownerId")).populate("freeters");
+		return EventModel.findOne({ _id: eventId }).populate("ownerId").populate("freeters");
 	}
 
 	/**
